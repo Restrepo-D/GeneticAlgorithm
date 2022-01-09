@@ -34,21 +34,6 @@ class Genetic():
                 score += 1
         return score
 
-    def get_percent(self, percent):
-        """ Gets arbitrary percentage of population.
-
-        Args:
-            percent (float): Percent of population to keep.
-
-        Returns:
-            list: Highest scoring percentage of parents
-        """
-        keep, i = [], 0
-        while len(keep)/len(self.population) < percent:
-            keep.append(self.population[i])
-            i += 1
-        return keep
-
     def breed(self, mother, father):
         """ Breeds two individuals.
 
@@ -78,17 +63,18 @@ class Genetic():
             (str, int): strongest individual from population.
         """
         # Get parents.
-        parents = self.get_percent(self.parent_pool)
+        parents = self.population[:round(
+            len(self.population)*self.parent_pool)]
 
         # Breed.
         self.population = [self.breed(random.choice(parents)[0], random.choice(
             parents)[0]) for _ in range(self.population_size)]
-        
+
         # Score and maintain sort.
         self.population = sorted([(individual, self.calc_fitness(
             individual)) for individual in self.population], key=lambda x: x[1], reverse=True)
-        
-        # Return 
+
+        # Return
         return self.population[0]
 
     def evolve(self):
@@ -106,5 +92,5 @@ class Genetic():
 
 if __name__ == '__main__':
     g = Genetic(target='To be, or not to be: that is the question',
-                population_size=10000, parent_pool=.03)
+                population_size=1000, parent_pool=.1)
     g.evolve()
