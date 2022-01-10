@@ -8,7 +8,7 @@ class Genetic():
         Args:
             target (str, optional): Target string to find. Defaults to 'hello world'.
             population_size (int, optional): Individuals in each iteration. Defaults to 100.
-            parent_pool (float, optional): Percent of parents to use in breeding process. Defaults to .33.
+            parent_pool (float, optional): Percent of population to use in breeding process. Defaults to .33.
         """
         self.target = target
         self.genes = [chr(i) for i in range(32, 123)]
